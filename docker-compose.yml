@@ -1,0 +1,30 @@
+version: "2.4"
+services:
+  certbot-transip:
+    container_name: certbot
+    image: rbongers/certbot-dns-transip
+    volumes:
+     - ./letsencrypt:/etc/letsencrypt
+     - ./config-letsencrypt:/opt/certbot-dns-transip/config
+     - ./logs-letsencrypt:/opt/certbot-dns-transip/logs
+    command: >-
+             certonly --manual --preferred-challenge=dns
+             --manual-auth-hook=/opt/certbot-dns-transip/auth-hook
+             --manual-cleanup-hook=/opt/certbot-dns-transip/cleanup-hook
+             --non-interactive
+             --agree-tos --register-unsafely-without-email
+             -d ${DOMAIN}
+  certbot-transip-renew:
+    container_name: certbot-renew
+    image: rbongers/certbot-dns-transip
+    volumes:
+     - ./letsencrypt:/etc/letsencrypt
+     - ./config-letsencrypt:/opt/certbot-dns-transip/config
+     - ./logs-letsencrypt:/opt/certbot-dns-transip/logs
+    command: >-
+             certonly --manual --preferred-challenge=dns
+             --manual-auth-hook=/opt/certbot-dns-transip/auth-hook
+             --manual-cleanup-hook=/opt/certbot-dns-transip/cleanup-hook
+             --agree-tos --register-unsafely-without-email  --non-interactive
+             -d ${DOMAIN}
+
