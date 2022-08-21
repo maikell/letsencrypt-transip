@@ -14,6 +14,7 @@ services:
              --non-interactive
              --agree-tos --register-unsafely-without-email
              -d ${DOMAIN}
+
   certbot-transip-renew:
     container_name: certbot-renew
     image: rbongers/certbot-dns-transip
@@ -25,6 +26,6 @@ services:
              certonly --manual --preferred-challenge=dns
              --manual-auth-hook=/opt/certbot-dns-transip/auth-hook
              --manual-cleanup-hook=/opt/certbot-dns-transip/cleanup-hook
-             --agree-tos --register-unsafely-without-email  --non-interactive
+             --agree-tos --register-unsafely-without-email --non-interactive
              -d ${DOMAIN}
 
